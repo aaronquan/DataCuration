@@ -32,7 +32,6 @@
 	List<News> results = new ArrayList<News>();
 	boolean first = true;
 	if(hlSearch != ""){
-		out.println("bleh");
 		String[] words = hlSearch.split(" ");
 		for(News n: list){
 			if(n.matchHeadline(words)){
@@ -77,9 +76,73 @@
 			}
 		}
 	}
+	if(agency != ""){
+		String[] words = agency.split(" ");
+		if(first){
+			for(News n: list){
+				if(n.matchAgency(words)){
+					results.add(n);
+				}
+			}
+			first = false;
+		}else{
+			list = results;
+			results = new ArrayList<News>();
+			for(News n: list){
+				if(n.matchAgency(words)){
+					results.add(n);
+				}
+			}
+		}
+	}
+	if(city != ""){
+		String[] words = city.split(" ");
+		if(first){
+			for(News n: list){
+				if(n.matchCity(words)){
+					results.add(n);
+				}
+			}
+			first = false;
+		}else{
+			list = results;
+			results = new ArrayList<News>();
+			for(News n: list){
+				if(n.matchCity(words)){
+					results.add(n);
+				}
+			}
+		}
+	}
+	if(keywords != ""){
+		String[] words = keywords.split(" ");
+		if(first){
+			for(News n: list){
+				if(n.matchKeywords(words)){
+					results.add(n);
+				}
+			}
+			first = false;
+		}else{
+			list = results;
+			results = new ArrayList<News>();
+			for(News n: list){
+				if(n.matchKeywords(words)){
+					results.add(n);
+				}
+			}
+		}
+	}
+	
 	String offset = request.getParameter("offset");
 	int i = 0;
-	for(News n: results){
+	if(offset != null){
+		i = Integer.parseInt(offset);
+	}
+	for(int j = i; j < i + 10; j++){
+		if(j > results.size()-1) break;
+		if(j < 0) break;
+		News n = results.get(j);
 		out.println("<tr>");
 		PageHelper.inTd(out, n.getHeadline());
 		PageHelper.inTd(out, n.getLastModified());
@@ -94,6 +157,32 @@
 	}
 %>
 </table>
+<%
+	if(i > 0){
+		out.println("<form action='results.jsp' style='float: left;'>");
+		out.println("<input type='hidden' name='headline' value='"+hlSearch+"'>");
+		out.println("<input type='hidden' name='month' value='"+month+"'>");
+		out.println("<input type='hidden' name='year' value='"+year+"'>");
+		out.println("<input type='hidden' name='agency' value='"+agency+"'>");
+		out.println("<input type='hidden' name='city' value='"+city+"'>");
+		out.println("<input type='hidden' name='keywords' value='"+keywords+"'>");
+		out.println("<input type='hidden' name='offset' value='"+Integer.toString(i-10)+"'>");
+		out.println("<input type=submit value='Prev'>");
+		out.println("</form>");
+		
+	}
+%>
+<form action="results.jsp">
+<%
+	out.println("<input type='hidden' name='headline' value='"+hlSearch+"'>");
+	out.println("<input type='hidden' name='month' value='"+month+"'>");
+	out.println("<input type='hidden' name='year' value='"+year+"'>");
+	out.println("<input type='hidden' name='agency' value='"+agency+"'>");
+	out.println("<input type='hidden' name='city' value='"+city+"'>");
+	out.println("<input type='hidden' name='keywords' value='"+keywords+"'>");
+	out.println("<input type='hidden' name='offset' value='"+Integer.toString(i+10)+"'>");
+%>
+<input type=submit value='Next'>
 </form>
 </body>
 </html>

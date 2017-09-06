@@ -88,21 +88,41 @@ public class News {
 	}
 	public boolean matchMonth(String s) throws ParseException {
 		if(!last_modified.equals("")) {
-			System.out.println(last_modified);
 			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(last_modified);
 			if(date.getMonth()+1 != Integer.parseInt(s)) return false; 
-			System.out.println(date.getMonth());
 		}
 		return true;
 	}
 	public boolean matchYear(String s) throws ParseException {
 		if(!last_modified.equals("")) {
 			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(last_modified);
-			System.out.println(date.getYear());
 			if(date.getYear()+1900 != Integer.parseInt(s)) return false; 
 			
 		}
 		return true;
 	}
-	
+	public boolean matchAgency(String[] s){
+		for(int i = 0; i < s.length; i++) {
+			if (agency.toLowerCase().indexOf(s[i].toLowerCase()) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public boolean matchCity(String[] s){
+		for(int i = 0; i < s.length; i++) {
+			if (city.toLowerCase().indexOf(s[i].toLowerCase()) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public boolean matchKeywords(String[] s){
+		for(int i = 0; i < s.length; i++) {
+			if (content.toLowerCase().indexOf(s[i].toLowerCase()) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
