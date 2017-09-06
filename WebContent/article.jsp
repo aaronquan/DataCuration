@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import="main.*, java.util.*" %>
+<%@ page import="unsw.curation.api.tokenization.ExtractionKeywordImpl" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -12,7 +13,8 @@
 <input type='submit' value='Back to Home Page'>
 </form>
 <% 
-	NewsStore ns = (NewsStore)session.getAttribute("newsStore");
+	NewsStore ns = new NewsStore();
+	ns.addNewsFromFile();
 	int articleNum = Integer.parseInt(request.getParameter("num"));
 	News news = ns.getNewsAtIndex(articleNum);
 	out.println("<center><h1>");
@@ -50,9 +52,21 @@
 	}
 	
 %>
+<form action='article.jsp' method='get'>
 <input type='submit' value='Extract Keywords'>
+</form>
+<form action='article.jsp' method='get'>
 <input type='submit' value='Extract People'>
+</form>
+<form action='article.jsp' method='get'>
 <input type='submit' value='Extract Organizations'>
+</form>
+<form action='article.jsp' method='get'>
 <input type='submit' value='Extract Locations'>
+
+<%
+	
+%>
+</form>
 </body>
 </html>
