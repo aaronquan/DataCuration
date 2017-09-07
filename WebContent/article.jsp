@@ -53,19 +53,34 @@
 	
 %>
 <form action='article.jsp' method='get'>
+<% 
+	out.println("<input type='hidden' name='num' value='"+Integer.toString(articleNum)+"'");
+%>
 <input type='submit' value='Extract Keywords'>
 </form>
 <form action='article.jsp' method='get'>
+<% 
+	out.println("<input type='hidden' name='num' value='"+Integer.toString(articleNum)+"'");
+%>
 <input type='submit' value='Extract People'>
 </form>
 <form action='article.jsp' method='get'>
+<% 
+	out.println("<input type='hidden' name='num' value='"+Integer.toString(articleNum)+"'");
+%>
 <input type='submit' value='Extract Organizations'>
 </form>
 <form action='article.jsp' method='get'>
+<% 
+	out.println("<input type='hidden' name='num' value='"+Integer.toString(articleNum)+"'");
+%>
 <input type='submit' value='Extract Locations'>
 
 <%
-	
+	String extract = request.getParameter("extract");
+	if(extract != null){
+		
+	}
 %>
 </form>
 </body>
